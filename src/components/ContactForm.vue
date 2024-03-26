@@ -37,7 +37,11 @@
             </label>
         </div>
         <div class="form-group">
-            <button class="btn btn-primary">Lưu</button>
+            <button v-if="contactLocal._id" class="btn btn-primary">Lưu</button>
+            <button v-if="!contactLocal._id" type="button" 
+            class="ml-2 btn btn-primary" @click="addContact">
+                Thêm
+            </button>
             <button v-if="contactLocal._id" type="button" 
             class="ml-2 btn btn-danger" @click="deleteContact">
                 Xóa
@@ -54,7 +58,7 @@ export default {
         Field,
         ErrorMessage,
     },
-    emits: ["submit:contact", "delete:contact"],
+    emits: ["submit:contact", "delete:contact", "add:contact"],
     props: {
         contact: { type: Object, required: true }
     },
@@ -90,6 +94,9 @@ export default {
         },
         deleteContact() {
             this.$emit("delete:contact", this.contactLocal.id);
+        },
+        addContact() {
+            this.$emit("add:contact", this.contactLocal);
         },
     },
 };
